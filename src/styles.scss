@@ -1,0 +1,49 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&display=swap');
+:root{
+    --main-color:#8C8CEF;
+    --second-color:#E5E5E5;
+    --main-font: "Albert Sans", sans-serif;
+    --second-font: "Alegreya Sans SC", sans-serif;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: var(--main-font);
+}
+
+.second-font{
+    font-family: var(--second-font);
+}
+
+.main-bg{
+    background-color: var(--main-color);
+}
+.main-color{
+    color: var(--main-color);
+}
+
+.fw-700{
+    font-weight: 700;
+}
+.p-100px{
+    padding:0 100px;
+}
+.vertical-middel{
+    vertical-align: middle;
+    height: 100%;
+}
+
+.main-btn{
+    background-color: var(--main-color);
+    border: 0;
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: white;
+}
