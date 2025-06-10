@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { ButtonModule } from 'primeng/button';
+import { LayoutComponent } from "./pages/layout/layout.component";
+
 
 @Component({
   selector: 'app-root',
-  imports: [LoginComponent , ButtonModule],
+  imports: [ButtonModule, LayoutComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
