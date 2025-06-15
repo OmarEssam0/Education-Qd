@@ -7,7 +7,7 @@ import { LayoutComponent } from "./pages/layout/layout.component";
 
 @Component({
   selector: 'app-root',
-  imports: [ButtonModule, LayoutComponent],
+  imports: [ButtonModule, LayoutComponent , RouterOutlet , LoginComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

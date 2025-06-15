@@ -34,4 +34,9 @@ isLeftSidebarCollapsed = signal<boolean>(false);
     changeIsLeftSidebarCollapsed(isLeftSidebarCollapsed: boolean): void {
         this.isLeftSidebarCollapsed.set(isLeftSidebarCollapsed);
     }
+
+    setisLeftSidebarCollapsed(data:boolean){
+        this.isLeftSidebarCollapsed.set(data)
+    }
+
 }

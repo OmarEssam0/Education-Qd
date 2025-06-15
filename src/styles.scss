@@ -18,12 +18,16 @@ body{
     font-family: var(--main-font);
 }
 
+.border-rud{
+    border-radius: 8px;
+}
+
 .second-font{
     font-family: var(--second-font);
 }
 
 .main-bg{
-    background-color: var(--main-color);
+    background-color: var(--main-color) !important;
 }
 .main-color{
     color: var(--main-color);
@@ -46,4 +50,18 @@ body{
     border-radius: 8px;
     padding: 8px 10px;
     color: white;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.w-69{
+    width: 69%;
+}
+
+.w-30{
+    width: 30%;
+}
+.w-33-33{
+    width: 32.8%;
 }

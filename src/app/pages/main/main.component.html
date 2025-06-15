@@ -1,3 +1,13 @@
+<div class="toolbar" [ngClass]="sizeClass()">
+  <p-toolbar>
+    <ng-template #start>
+      <i class="fa-solid fa-bars-staggered text-black fs-3 cursor-pointer " (click)="closeLeftSideBar()"></i>
+    </ng-template>
+    <ng-template #end>
+      <p-button label="Log Out" icon="fa-solid fa-arrow-right-from-bracket" severity="danger" />
+    </ng-template>
+  </p-toolbar>
+</div>
 <div class="body" [ngClass]="sizeClass()">
   <router-outlet />
 </div>

@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { SidebarItem } from './sidebar-items';
+import { sidebarItem } from './sidebar-items';
 @Component({
   selector: 'app-sidebar',
   imports: [CommonModule , RouterModule],
@@ -10,28 +12,8 @@ import { RouterModule } from '@angular/router';
 export class sidebarComponent {
 isLeftSidebarCollapsed = input.required<boolean>();
   changeIsLeftSidebarCollapsed = output<boolean>();
-  items = [
-    {
-      routeLink: 'dashboard',
-      icon: 'fa-solid fa-house',
-      label: 'Dashboard',
-    },
-    {
-      routeLink: 'products',
-      icon: 'fa-solid fa-user-plus',
-      label: 'create university',
-    },
-    {
-      routeLink: 'pages',
-      icon: 'fa-solid fa-building-columns',
-      label: 'view All University',
-    },
-    {
-      routeLink: 'settings',
-      icon: 'fal fa-cog',
-      label: 'Settings',
-    },
-  ];
+  
+  sidebarItem :SidebarItem[] = sidebarItem 
 
   toggleCollapse(): void {
     this.changeIsLeftSidebarCollapsed.emit(!this.isLeftSidebarCollapsed());

@@ -18,7 +18,7 @@
   width: 100%;
 }
 .sidenav .logo-container .logo {
-  background: white;
+  background: #FFF873;
   text-align: center;
   width: 3rem;
   min-width: 3rem;
@@ -26,11 +26,11 @@
   padding: 0.313rem;
   font-size: 24px;
   font-weight: 900;
-  cursor: pointer;
+  // cursor: pointer;
   border: none;
 }
 .sidenav .logo-container .logo-text {
-  margin-left: 1.5rem;
+  // margin-left: 1.5rem;
   font-size: 24px;
   font-weight: 700;
   color: white;
@@ -93,4 +93,8 @@
 .active .sidenav-link-icon,
 .active .sidenav-link-text {
   color: black;
+}
+
+.space-letter{
+  letter-spacing: 10px;
 }

@@ -1,0 +1,46 @@
+<div class="create-toolbar p-3 bg-white mb-3 d-flex justify-content-between align-items-center">
+  <div class="create-title d-flex align-items-center gap-2 fs-3">
+    <i class="fa-solid fa-square-plus main-color"></i>
+    <span class="fw-bold">Create unversity</span>
+  </div>
+  <div class="exacl-btn">
+    <p-button label="Upload excel file" styleClass="main-bg" icon="fa-solid fa-upload" [loading]="loading" (onClick)="load()" />
+  </div>
+</div>
+<div class="create-form bg-white p-4">
+  <form action="">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div>
+                <label for="UniversityName" class="ms-1 d-block">University name</label>
+                <input id="UniversityName" type="text" class="form-control mt-2" placeholder="University name">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div>
+                <label for="Email" class="ms-1 d-block">Email</label>
+                <input id="Email" type="text" class="form-control mt-2" placeholder="Email">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div>
+                <label for="PhoneNumber" class="ms-1 d-block">PhoneNumber</label>
+                <input id="PhoneNumber" type="text" class="form-control mt-2" placeholder="PhoneNumber">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div>
+                <label for="Address" class="ms-1 d-block">Address</label>
+                <input id="Address" type="text" class="form-control mt-2" placeholder="Address">
+            </div>
+        </div>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <p-button label="Create" styleClass="w-100" icon="fa-solid fa-check" [loading]="loading" (onClick)="load()" />
+        </div>
+    </div>
+  </form>
+</div>
