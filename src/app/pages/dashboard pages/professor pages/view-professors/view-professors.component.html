@@ -1,0 +1,99 @@
+<app-main-toolbar [titleName]="'View all professors'"></app-main-toolbar>
+@if(isBrowser){
+<p-table
+  [value]="AllProfessors"
+  showGridlines
+  [tableStyle]="{ 'min-width': '60rem' }"
+  emptyMessage="لا توجد بيانات متاحة"
+  selectionMode="single"
+>
+  <!-- <ng-template #caption>
+              <div class="flex items-center justify-between">
+                  <span class="text-xl font-bold">Products</span>
+              </div>
+          </ng-template> -->
+  <ng-template #caption>
+    <div class="d-flex align-items-center justify-content-end text-center">
+      <p-iconfield>
+        <p-inputicon styleClass="pi pi-search" />
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="searchInput"
+          (input)="getAllProfessors()"
+          placeholder="Search..."
+        />
+      </p-iconfield>
+    </div>
+  </ng-template>
+  <ng-template #header>
+    <tr>
+      @for(header of headerTableData ; track $index){
+      <th class="text-center" [pSortableColumn]="header.headerName">
+        {{ header.headerName }}
+        @if(header.sorted){
+        <p-sortIcon [field]="header.headerName" />
+        }
+      </th>
+      }
+    </tr>
+  </ng-template>
+  <ng-template #body let-data>
+    <tr
+      class="text-center"
+      [pSelectableRow]="data"
+      [routerLink]="['detials/', data.id]"
+      [queryParams]="{ type: 'Professor' }"
+    >
+      <td class="text-center">{{ data.name }}</td>
+      <td class="text-center">{{ data.email }}</td>
+      <td class="text-center">
+        <p-button
+          label="Assign"
+          styleClass="main-bg"
+          (click)="
+            showDialog(); AssignCourse.get('professorId')?.setValue(data.id)
+          "
+        />
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td class="text-center" [attr.colspan]="headerTableData.length">
+        No Data Available
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<p-dialog
+  header="Assign course to professor"
+  [modal]="true"
+  [(visible)]="visible"
+  styleClass="m-h-500px"
+  [style]="{ width: '25rem' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+>
+  <form [formGroup]="AssignCourse" (submit)="assignCouresToProfessor()">
+    <label for="Title" class="ms-1 d-block">Assign course to professor</label>
+    <ng-select
+      class="mt-2"
+      placeholder="select course"
+      formControlName="coursesIds"
+      [multiple]="true"
+    >
+      @for (course of allCourses; track course.code) {
+      <ng-option [value]="course.id">{{ course.title }}</ng-option>
+      }
+    </ng-select>
+    <div class="d-block">
+      <p-button
+        type="submit"
+        label="Assign"
+        styleClass="w-100 mt-3"
+        icon="fa-solid fa-check"
+      />
+    </div>
+  </form>
+</p-dialog>
+}

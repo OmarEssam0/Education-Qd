@@ -4,7 +4,7 @@
       <i class="fa-solid fa-bars-staggered text-black fs-3 cursor-pointer " (click)="closeLeftSideBar()"></i>
     </ng-template>
     <ng-template #end>
-      <p-button label="Log Out" icon="fa-solid fa-arrow-right-from-bracket" severity="danger" />
+      <p-button (click)="logout()" label="Log Out" icon="fa-solid fa-arrow-right-from-bracket" severity="danger" />
     </ng-template>
   </p-toolbar>
 </div>

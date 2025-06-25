@@ -1,0 +1,10 @@
+{
+  "input": "http://40.76.114.251:5000/swagger/Dashboard/swagger.json",
+  "output": "./src/app/core/backend/dashboard",
+  "ignoreUnusedModels": false,
+  "skipSslValidation": true,
+  "module": "DashboardApiModule",
+  "skipJsonSuffix": true,
+  "templates": "openapi/templates",
+  "removeStaleFiles": true
+}

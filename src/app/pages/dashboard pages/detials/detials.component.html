@@ -1,0 +1,330 @@
+<div
+  class="create-toolbar p-3 bg-white mb-3 d-flex justify-content-between align-items-center"
+>
+  <div class="create-title fs-3 d-flex align-items-center">
+    <div
+      class="back d-flex justify-content-center align-items-center cursor-pointer"
+      [routerLink]="[back]"
+    >
+      <i class="fa-solid fa-chevron-left fs-5"></i>
+    </div>
+    <span class="fw-bold ms-2">{{ type }}</span>
+  </div>
+</div>
+@if(type == 'university' && universityDetials){
+<div class="bg-white p-3">
+  <div class="row g-3">
+    <!-- <div class="col-md-12">
+            <div class="banner w-100">
+                <img [src]="universityDetials.bannerImage?.filePath" [alt]="universityDetials.bannerImage?.fileName" class="img-fluid">
+            </div>
+        </div> -->
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Name:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ universityDetials.name || "-" }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Email:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ universityDetials.email || "-" }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Phone Number:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ universityDetials.phoneNumber || "-" }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Address:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ universityDetials.address || "-" }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">College Count:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ universityDetials.colleges?.length || 0 }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Web:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          <a
+            [href]="universityDetials.webAddress"
+            class="text-black text-decoration-none"
+            >{{ universityDetials.webAddress || "-" }}</a
+          >
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+} @if(type == 'college' && collegeDetials){
+<div class="bg-white p-3">
+  <div class="row g-3">
+    <!-- <div class="col-md-12">
+            <div class="banner w-100">
+                <img [src]="universityDetials.bannerImage?.filePath" [alt]="universityDetials.bannerImage?.fileName" class="img-fluid">
+            </div>
+        </div> -->
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Name:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ collegeDetials.name || "-" }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Email:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ collegeDetials.email || "-" }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Phone Number:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ collegeDetials.phoneNumber || "-" }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Address:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ collegeDetials.address || "-" }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Web:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          <a
+            [href]="collegeDetials.webAddress"
+            class="text-black text-decoration-none"
+            >{{ collegeDetials.webAddress || "-" }}</a
+          >
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+} @if(type == 'Course' && courseDetials){
+<div class="bg-white p-3">
+  <div class="row g-3">
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Title:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ courseDetials.title || "-" }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Prerequisites:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ courseDetials.prerequisites?.[0] || '-' }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">College:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ courseDetials.college?.name }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+} @if(type == 'Professor' && professorDetials){
+<div class="bg-white p-3">
+  <div class="row g-3">
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Name:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ professorDetials.name }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Email:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ professorDetials.email }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">College:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ professorDetials.college?.name }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+} @if(type == 'Student' && studentDetials){
+<div class="bg-white p-3">
+  <div class="row g-3">
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Name:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ studentDetials.name || "-" }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Email:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ studentDetials.email || "-" }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Major:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ studentDetials.major || "-" }}
+        </span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="label">
+        <span class="fw-bold">Department:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ studentDetials.department || "-" }}
+        </span>
+      </div>
+    </div>
+  </div>
+  @for(level of studentDetials.levels ; track $index){
+  <div class="row g-3 mt-3">
+    <div class="col-md-12">
+      <div class="label">
+        <span class="fw-bold">Level:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ level.levelNumber || "-" }}
+        </span>
+      </div>
+    </div>
+    @for( semester of level.semesters ; track $index){
+    <div class="col-md-12">
+      <div class="label">
+        <span class="fw-bold">Semester:</span>
+        <span
+          class="main-border border-rud-5 py-2 fs-5 px-2 w-100 mt-2 d-block"
+        >
+          {{ semester.semester || "-" }}
+        </span>
+      </div>
+      @for( course of semester.courses ; track $index){
+      <div class="row g-2 mt-2">
+        <div class="col-md-4">
+          <div class="label">
+            <span class="fw-bold">Course Grade:</span>
+            <span
+              class="main-border border-rud-5 py-2 fs-6 px-2 w-100 mt-2 d-block"
+            >
+              {{ course.courseGrade || "-" }}
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="label">
+            <span class="fw-bold">Course Status:</span>
+            <span
+              class="main-border border-rud-5 py-2 fs-6 px-2 w-100 mt-2 d-block"
+            >
+              {{ course.courseStatus || "-" }}
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="label">
+            <span class="fw-bold">Professor ID:</span>
+            <span
+              class="main-border border-rud-5 py-2 fs-6 px-2 w-100 mt-2 d-block"
+            >
+              {{ course.professorCourse?.professorId || "-" }}
+            </span>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    }
+    <hr class="my-3" />
+  </div>
+  }
+</div>
+}

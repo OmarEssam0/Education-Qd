@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -14,17 +14,25 @@ export type ChartOptions = {
   xaxis: ApexXAxis;
   title: ApexTitleSubtitle;
 };
+
+export type ChartOptionsPie = {
+  series: any;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  title: ApexTitleSubtitle;
+};
 @Component({
   selector: 'app-home',
-  imports: [NgApexchartsModule],
+  standalone:true,
+  imports: [NgApexchartsModule , ProgressSpinnerModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-
+  isloading:boolean = true
    chartOptions: ChartOptions;
    chartOptionsRadar: ChartOptions;
-   chartOptionsPie: ChartOptions;
+   chartOptionsPie: ChartOptionsPie;
 
   constructor() {
     this.chartOptions = {
@@ -87,12 +95,7 @@ export class HomeComponent {
       },
     };
     this.chartOptionsPie = {
-      series: [
-        {
-          name: 'My-series',
-          data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
-        },
-      ],
+      series: [10, 41, 35, 51, 49, 62, 69, 91, 148],
       chart: {
         height: 350,
         type: 'pie',
@@ -116,4 +119,14 @@ export class HomeComponent {
       },
     };
   }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    if(this.chartOptions && this.chartOptionsRadar && this.chartOptionsPie){
+      this.isloading =false
+    }
+  }
+
+  
 }

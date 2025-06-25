@@ -1,0 +1,10 @@
+{
+  "input": "http://40.76.114.251:5000/swagger/Common/swagger.json",
+  "output": "./src/app/core/backend/Common",
+  "ignoreUnusedModels": false,
+  "skipSslValidation": true,
+  "module": "CommonApiModule",
+  "skipJsonSuffix": true,
+  "templates": "openapi/templates",
+  "removeStaleFiles": true
+}

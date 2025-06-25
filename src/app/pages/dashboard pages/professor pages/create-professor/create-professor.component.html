@@ -1,0 +1,59 @@
+<div
+  class="create-toolbar p-3 bg-white mb-3 d-flex justify-content-between align-items-center"
+>
+  <div class="create-title d-flex align-items-center gap-2 fs-3">
+    <i class="fa-solid fa-square-plus main-color"></i>
+    <span class="fw-bold">Create Professor</span>
+  </div>
+  <div class="exacl-btn">
+    <p-button
+      label="Upload excel file"
+      styleClass="main-bg"
+      icon="fa-solid fa-upload"
+      [loading]="loading"
+    />
+  </div>
+</div>
+<div class="create-form bg-white p-4">
+  <form [formGroup]="createProfessor" (submit)="create()">
+    <div class="row g-3 align-items-center">
+      <div class="col-md-4">
+        <div>
+          <label for="CollegeName" class="ms-1 d-block"
+            >Name</label
+          >
+          <input
+            id="CollegeName"
+            formControlName="Name"
+            type="text"
+            class="form-control mt-2 h-40px"
+            placeholder="College name"
+          />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div>
+          <label for="Email" class="ms-1 d-block">Email</label>
+          <input
+            id="Email"
+            type="text"
+            formControlName="Email"
+            class="form-control mt-2 h-40px"
+            placeholder="Email"
+          />
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <p-button
+          type="submit"
+          label="Create"
+          styleClass="w-100"
+          icon="fa-solid fa-check"
+          [loading]="loading"
+        />
+      </div>
+    </div>
+  </form>
+</div>
+

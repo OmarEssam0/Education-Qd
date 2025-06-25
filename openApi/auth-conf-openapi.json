@@ -1,0 +1,10 @@
+{
+  "input": "http://40.76.114.251:5000/swagger/Auth/swagger.json",
+  "output": "./src/app/core/backend/auth",
+  "ignoreUnusedModels": false,
+  "skipSslValidation": true,
+  "module": "AuthApiModule",
+  "skipJsonSuffix": true,
+  "templates": "openapi/templates",
+  "removeStaleFiles": true
+}

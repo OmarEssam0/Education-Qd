@@ -1,0 +1,68 @@
+<div
+  class="create-toolbar p-3 bg-white mb-3 d-flex justify-content-between align-items-center"
+>
+  <div class="create-title d-flex align-items-center gap-2 fs-3">
+    <i class="fa-solid fa-square-plus main-color"></i>
+    <span class="fw-bold">Create course</span>
+  </div>
+  <div class="exacl-btn">
+    <p-button
+      label="Upload excel file"
+      styleClass="main-bg"
+      icon="fa-solid fa-upload"
+      [loading]="loading"
+    />
+  </div>
+</div>
+<div class="create-form bg-white p-4">
+  <form [formGroup]="createCourse" (submit)="create()">
+    <div class="row g-3 align-items-center">
+      <div class="col-md-4">
+        <div>
+          <label for="Code" class="ms-1 d-block">Code</label>
+          <input
+            id="Code"
+            formControlName="code"
+            type="text"
+            class="form-control mt-2 h-40px"
+            placeholder="Code"
+          />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div>
+          <label for="Title" class="ms-1 d-block">Title</label>
+          <input
+            id="Title"
+            type="text"
+            formControlName="title"
+            class="form-control mt-2 h-40px"
+            placeholder="Title"
+          />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="Title" class="ms-1 d-block">Prerequisite course</label>
+        <ng-select
+          class="mt-2"
+          placeholder="select course"
+          formControlName="prerequisiteCourseIds"
+          [multiple]="true"
+        >
+          @for (course of allCourses; track course.code) {
+          <ng-option [value]="course.id">{{ course.title }}</ng-option>
+          }
+        </ng-select>
+      </div>
+      <div class="col-md-4">
+        <p-button
+          type="submit"
+          label="Create"
+          styleClass="w-100"
+          icon="fa-solid fa-check"
+          [loading]="loading"
+        />
+      </div>
+    </div>
+  </form>
+</div>

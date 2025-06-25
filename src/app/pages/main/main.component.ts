@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, EventEmitter, input, Output } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, computed, EventEmitter, inject, input, Output } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { ToolbarModule } from 'primeng/toolbar';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ButtonModule } from 'primeng/button';
@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './main.component.scss'
 })
 export class MainComponent {
+  readonly #router = inject(Router) 
 @Output() itemEvent:EventEmitter<boolean> = new EventEmitter
 isLeftSidebarCollapsed = input.required<boolean>();
   screenWidth = input.required<number>();
@@ -28,4 +29,9 @@ isLeftSidebarCollapsed = input.required<boolean>();
       this.closeLeftSideBarVar = !this.closeLeftSideBarVar     
       this.itemEvent.emit(this.closeLeftSideBarVar)  
   }
+  logout(){
+    localStorage.removeItem('token')
+    this.#router.navigate(['/login'])
+  }
 }
+

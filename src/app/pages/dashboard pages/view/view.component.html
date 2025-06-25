@@ -1,2 +1,6 @@
 <app-main-toolbar [titleName]="'View all university'"></app-main-toolbar>
-<app-table></app-table>
+<app-table
+  [bodyTableData]="tableBodyData"
+  [headerTableData]="tableHeaderData"
+  [allUniversities]="allUniversities"
+></app-table>

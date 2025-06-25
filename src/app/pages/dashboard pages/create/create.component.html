@@ -1,46 +1,171 @@
-<div class="create-toolbar p-3 bg-white mb-3 d-flex justify-content-between align-items-center">
+<div
+  class="create-toolbar p-3 bg-white mb-3 d-flex justify-content-between align-items-center"
+>
   <div class="create-title d-flex align-items-center gap-2 fs-3">
     <i class="fa-solid fa-square-plus main-color"></i>
-    <span class="fw-bold">Create unversity</span>
+    <span class="fw-bold">Create university</span>
   </div>
   <div class="exacl-btn">
-    <p-button label="Upload excel file" styleClass="main-bg" icon="fa-solid fa-upload" [loading]="loading" (onClick)="load()" />
+    <p-button
+      label="Upload excel file"
+      styleClass="main-bg"
+      icon="fa-solid fa-upload"
+      [loading]="loading"
+    />
   </div>
 </div>
 <div class="create-form bg-white p-4">
-  <form action="">
-    <div class="row g-3">
-        <div class="col-md-4">
-            <div>
-                <label for="UniversityName" class="ms-1 d-block">University name</label>
-                <input id="UniversityName" type="text" class="form-control mt-2" placeholder="University name">
-            </div>
+  <form [formGroup]="createUniversity" (submit)="create()">
+    <div class="row g-3 align-items-center">
+      <div
+        class="col-12 d-flex w-100 align-items-center justify-content-center"
+      >
+        <div class="mt-2 position-relative">
+          <div class="logoSpace position-relative">
+            <img [src]="Logo" alt="Logo" class="img-fluid" />
+            <label
+              for="File"
+              class="position-absolute labelFile cursor-pointer"
+            ></label>
+            <input
+              type="file"
+              class="d-none"
+              id="File"
+              (change)="onFileChange($event, 'logo')"
+            />
+          </div>
         </div>
-        <div class="col-md-4">
-            <div>
-                <label for="Email" class="ms-1 d-block">Email</label>
-                <input id="Email" type="text" class="form-control mt-2" placeholder="Email">
-            </div>
+      </div>
+      <div class="col-md-4">
+        <div>
+          <label for="UniversityName" class="ms-1 d-block"
+            >University name</label
+          >
+          <input
+            id="UniversityName"
+            formControlName="UniversityName"
+            type="text"
+            class="form-control mt-2 h-40px"
+            placeholder="University name"
+          />
         </div>
-        <div class="col-md-4">
-            <div>
-                <label for="PhoneNumber" class="ms-1 d-block">PhoneNumber</label>
-                <input id="PhoneNumber" type="text" class="form-control mt-2" placeholder="PhoneNumber">
-            </div>
+      </div>
+      <div class="col-md-4">
+        <div>
+          <label for="Email" class="ms-1 d-block">Email</label>
+          <input
+            id="Email"
+            type="text"
+            formControlName="Email"
+            class="form-control mt-2 h-40px"
+            placeholder="Email"
+          />
         </div>
-        <div class="col-md-4">
-            <div>
-                <label for="Address" class="ms-1 d-block">Address</label>
-                <input id="Address" type="text" class="form-control mt-2" placeholder="Address">
-            </div>
+      </div>
+      <div class="col-md-4">
+        <div>
+          <label for="PhoneNumber" class="ms-1 d-block">PhoneNumber</label>
+          <input
+            id="PhoneNumber"
+            formControlName="PhoneNumber"
+            type="text"
+            class="form-control mt-2 h-40px"
+            placeholder="PhoneNumber"
+          />
         </div>
-        <div class="col-md-4">
+      </div>
+      <div class="col-md-4">
+        <div>
+          <label for="Address" class="ms-1 d-block">Address</label>
+          <input
+            id="Address"
+            formControlName="Address"
+            type="text"
+            class="form-control mt-2 h-40px"
+            placeholder="Address"
+          />
         </div>
-        <div class="col-md-4">
+      </div>
+      <div class="col-md-4">
+        <div>
+          <label for="WebAddress" class="ms-1 d-block">Web address</label>
+          <input
+            id="WebAddress"
+            formControlName="WebAddress"
+            type="text"
+            class="form-control mt-2 h-40px"
+            placeholder="Web address"
+          />
         </div>
-        <div class="col-md-4">
-            <p-button label="Create" styleClass="w-100" icon="fa-solid fa-check" [loading]="loading" (onClick)="load()" />
+      </div>
+      <div class="col-md-4">
+        <div>
+          <label for="PaidUntil" class="ms-1 d-block">Paid until</label>
+          <p-datepicker
+            id="PaidUntil"
+            class="mt-2"
+            formControlName="PaidUntil"
+            placeholder="PaidUntil"
+            (ngModelChange)="
+              $event != null
+                ? this.createUniversity.get('IsPaid')?.setValue(true)
+                : this.createUniversity.get('IsPaid')?.setValue(false)
+            "
+            [iconDisplay]="'input'"
+            [minDate]="minDate"
+            [showIcon]="true"
+            inputId="icondisplay"
+            [inputStyle]="{ height: '40px' }"
+            [style]="{ 'margin-top': '0.5rem', width: '100%' }"
+          />
         </div>
+      </div>
+      <div class="col-md-4">
+        <div>
+          <label for="BannerImage" class="ms-1 d-block">Banner image</label>
+          <input
+            id="BannerImage"
+            type="file"
+            class="form-control mt-2 h-40px"
+            placeholder="Banner image"
+            (change)="onFileChange($event, 'banner')"
+          />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div>
+          <label for="IsPaid" class="ms-1 d-block">Is paid</label>
+          <div class="mt-2">
+            <p-toggleswitch
+              formControlName="IsPaid"
+              id="IsPaid"
+              class="h-40px"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div>
+          <label for="Description" class="ms-1 d-block">Description</label>
+          <textarea
+            id="Description"
+            formControlName="Description"
+            type="text"
+            class="form-control mt-2"
+            placeholder="Description"
+            rows="4"
+          ></textarea>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <p-button
+          type="submit"
+          label="Create"
+          styleClass="w-100"
+          icon="fa-solid fa-check"
+          [loading]="loading"
+        />
+      </div>
     </div>
   </form>
 </div>

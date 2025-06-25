@@ -1,0 +1,66 @@
+<app-main-toolbar [titleName]="'View all College'"></app-main-toolbar>
+@if(isBrowser){
+<p-table
+  [value]="allColleges"
+  showGridlines
+  [tableStyle]="{ 'min-width': '60rem' }"
+  emptyMessage="لا توجد بيانات متاحة"
+  selectionMode="single"
+>
+  <!-- <ng-template #caption>
+              <div class="flex items-center justify-between">
+                  <span class="text-xl font-bold">Products</span>
+              </div>
+          </ng-template> -->
+  <ng-template #caption>
+    <div class="d-flex align-items-center justify-content-end text-center">
+      <p-iconfield>
+        <p-inputicon styleClass="pi pi-search" />
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="searchInput"
+          (input)="getAllColleges()"
+          placeholder="Search..."
+        />
+      </p-iconfield>
+    </div>
+  </ng-template>
+  <ng-template #header>
+    <tr>
+      @for(header of headerTableData ; track $index){
+      <th class="text-center" [pSortableColumn]="header.headerName">
+        {{ header.headerName }}
+        @if(header.sorted){
+        <p-sortIcon [field]="header.headerName" />
+        }
+      </th>
+      }
+    </tr>
+  </ng-template>
+  <ng-template #body let-data>
+    <tr
+      class="text-center"
+      [pSelectableRow]="data"
+      [routerLink]="['detials/', data.id]"
+      [queryParams]="{ type: 'college' }"
+    >
+      <td class="text-center">{{ data.name || "-" }}</td>
+      <td class="text-center">{{ data.email || "-" }}</td>
+      <td class="text-center">{{ data.phoneNumber || "-" }}</td>
+      <td class="text-center">
+        <a [href]="data.webAddress" target="_blank">
+          <i class="fa-solid fa-up-right-from-square"></i>
+        </a>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td class="text-center" [attr.colspan]="headerTableData.length">
+        No Data Available
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+}

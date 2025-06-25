@@ -1,0 +1,13 @@
+diff --git a/node_modules/@ng-select/ng-select/fesm2022/ng-select-ng-select.mjs b/node_modules/@ng-select/ng-select/fesm2022/ng-select-ng-select.mjs
+index 867cde8..19fb64c 100644
+--- a/node_modules/@ng-select/ng-select/fesm2022/ng-select-ng-select.mjs
++++ b/node_modules/@ng-select/ng-select/fesm2022/ng-select-ng-select.mjs
+@@ -1,6 +1,7 @@
+ import * as i0 from '@angular/core';
+-import { Directive, Input, Injectable, input, EventEmitter, DOCUMENT, booleanAttribute, ElementRef, Component, ChangeDetectionStrategy, ViewEncapsulation, Optional, Inject, Output, ViewChild, InjectionToken, signal, numberAttribute, forwardRef, TemplateRef, Attribute, HostBinding, ContentChild, ContentChildren, HostListener, NgModule } from '@angular/core';
++import { Directive, Input, Injectable, input, EventEmitter,  booleanAttribute, ElementRef, Component, ChangeDetectionStrategy, ViewEncapsulation, Optional, Inject, Output, ViewChild, InjectionToken, signal, numberAttribute, forwardRef, TemplateRef, Attribute, HostBinding, ContentChild, ContentChildren, HostListener, NgModule } from '@angular/core';
+ import { NG_VALUE_ACCESSOR } from '@angular/forms';
++import { DOCUMENT } from '@angular/common';
+ import { animationFrameScheduler, asapScheduler, Subject, fromEvent, merge } from 'rxjs';
+ import { takeUntil, auditTime, startWith, tap, debounceTime, filter, map } from 'rxjs/operators';
+ import { NgTemplateOutlet, NgClass } from '@angular/common';
