@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
@@ -51,15 +51,56 @@ export class CreateStudentComponent {
   Semester = ['One', 'Two', 'Summer'];
   CourseStatus = ['Ongoing', 'Completed', 'Withdraw', 'Failed'];
   loading: boolean = false;
+  // id!: string;
   readonly #studentService = inject(StudentsService);
   readonly #professorService = inject(ProfessorsService);
   readonly #coursesService = inject(CoursesService);
   readonly #Route = inject(Router);
-  isBrowser = false;
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(
+    private Route: ActivatedRoute,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
+    // Route.queryParamMap.subscribe({
+    //   next: (data) => {
+    //     this.id = data.get('id') ?? '';
+    //   },
+    // });
+    // this.setValue();
   }
+
+  // setValue() {
+  //   this.#studentService
+  //     .apiStudentsGetStudentGet({
+  //       Id: this.id,
+  //     })
+  //     .subscribe({
+  //       next: (res) => {
+  //         this.createStudent.patchValue({
+  //           id: this.id,
+  //           Email: res.email,
+  //           Name: res.name,
+  //           studentCollegeId: res.studentCollegeId,
+  //           gpa: res.gpa,
+  //           department: res.department,
+  //           major: res.major,
+  //           levels: res.levels,
+  //         });
+  //         res.levels?.forEach((res) => {
+  //           res.semesters?.forEach((x) => {
+  //             x.courses?.forEach((c) => {
+  //               if (c.professorCourse?.course?.id) {                  
+  //                 this.getProfessorFromCourse(c.professorCourse?.course?.id);
+  //               }
+  //             });
+  //           });
+  //         });
+  //       },
+  //     });
+  // }
+  isBrowser = false;
   createStudent: FormGroup = new FormGroup({
+    // id: new FormControl<string | undefined>(undefined),
     Email: new FormControl<string | undefined>(
       isDevMode() ? 'professor@gmail.com' : undefined,
       [Validators.required]
@@ -169,14 +210,16 @@ export class CreateStudentComponent {
         },
       });
   }
-  getAllProfessorCourse:ProfessorByCourseResponseDto[]=[]
-  getProfessorFromCourse(courseId:string){
-    this.#professorService.apiProfessorsGetAllProfessorByCourseGet({
-      CourseId:courseId
-    }).subscribe({
-      next: res => {
-        this.getAllProfessorCourse = res.professors!
-      }
-    })
+  getAllProfessorCourse: ProfessorByCourseResponseDto[] = [];
+  getProfessorFromCourse(courseId: string) {
+    this.#professorService
+      .apiProfessorsGetAllProfessorByCourseGet({
+        CourseId: courseId,
+      })
+      .subscribe({
+        next: (res) => {
+          this.getAllProfessorCourse = res.professors!;
+        },
+      });
   }
 }

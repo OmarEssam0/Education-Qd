@@ -47,7 +47,7 @@
     >
       <td class="text-center">{{ data.name }}</td>
       <td class="text-center">{{ data.email }}</td>
-      <td class="text-center">
+      <td class="text-center" (click)="$event.stopPropagation()">
         <p-button
           label="Assign"
           styleClass="main-bg"

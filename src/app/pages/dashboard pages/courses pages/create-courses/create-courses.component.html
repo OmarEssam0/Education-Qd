@@ -3,16 +3,18 @@
 >
   <div class="create-title d-flex align-items-center gap-2 fs-3">
     <i class="fa-solid fa-square-plus main-color"></i>
-    <span class="fw-bold">Create course</span>
+    <span class="fw-bold">{{id ? 'Update course' :'Create course'}}</span>
   </div>
-  <div class="exacl-btn">
-    <p-button
-      label="Upload excel file"
-      styleClass="main-bg"
-      icon="fa-solid fa-upload"
-      [loading]="loading"
-    />
-  </div>
+  @if(!id){
+    <div class="exacl-btn">
+      <p-button
+        label="Upload excel file"
+        styleClass="main-bg"
+        icon="fa-solid fa-upload"
+        [loading]="loading"
+      />
+    </div>
+  }
 </div>
 <div class="create-form bg-white p-4">
   <form [formGroup]="createCourse" (submit)="create()">
@@ -41,23 +43,28 @@
           />
         </div>
       </div>
-      <div class="col-md-4">
-        <label for="Title" class="ms-1 d-block">Prerequisite course</label>
-        <ng-select
+  
+      @if(!id){
+        <div class="col-md-4">
+          <label for="Title" class="ms-1 d-block">Prerequisite course</label>
+          <ng-select
           class="mt-2"
           placeholder="select course"
           formControlName="prerequisiteCourseIds"
           [multiple]="true"
-        >
+          >
           @for (course of allCourses; track course.code) {
-          <ng-option [value]="course.id">{{ course.title }}</ng-option>
+            <ng-option [value]="course.id">{{ course.title }}</ng-option>
           }
         </ng-select>
       </div>
-      <div class="col-md-4">
+    }@else {
+      <div class="col-md-4"></div>
+    }
+    <div class="col-md-4">
         <p-button
           type="submit"
-          label="Create"
+          [label]="id ? 'Update' : 'Create'"
           styleClass="w-100"
           icon="fa-solid fa-check"
           [loading]="loading"

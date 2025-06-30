@@ -11,6 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import { UniversitiesService } from '../../../core/backend/dashboard/services';
 import Swal from 'sweetalert2';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-create',
   imports: [
@@ -24,8 +25,9 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
   styleUrl: './create.component.scss',
 })
 export class CreateComponent {
-  minDate: Date = new Date();
+  minDate: Date = new Date(new Date().setDate(new Date().getDate() + 1));
   selectedFile: File | null = null;
+  id!: string;
   // Base URL for the logo image
   baseUrl: string = 'image/Logo/';
   Logo:
@@ -34,9 +36,43 @@ export class CreateComponent {
     | null = `${this.baseUrl}pngtree-file-upload-icon-png-image_4646955.jpg`;
 
   readonly #unversitieService = inject(UniversitiesService);
+  readonly #Route = inject(Router);
+  constructor(private Route: ActivatedRoute) {
+    Route.queryParamMap.subscribe({
+      next: (data) => {
+        this.id = data.get('id') ?? '';
+      },
+    });
+    this.setValue();
+  }
+
+  setValue() {
+    this.#unversitieService
+      .apiUniversitiesGetUniversityGet({
+        Id: this.id,
+      })
+      .subscribe({
+        next: (res) => {
+          this.createUniversity.patchValue({
+            id: this.id,
+            Email: res.email,
+            UniversityName: res.name,
+            PaidUntil: res.paidUntil ? new Date(res.paidUntil) : null,
+            PhoneNumber: res.phoneNumber,
+            WebAddress: res.webAddress,
+            Description: res.description,
+            Address: res.address,
+            IsPaid: res.isPaid,
+            LogoImage: res.logoImage?.filePath,
+            BannerImage: res.bannerImage?.filePath,
+          });
+        },
+      });
+  }
   loading: boolean = false;
   // Form group for creating a university
   createUniversity: FormGroup = new FormGroup({
+    id: new FormControl<string | undefined>(undefined),
     Email: new FormControl<string | undefined>(
       isDevMode() ? 'Cairo@gmail.com' : undefined,
       [Validators.required]
@@ -90,7 +126,9 @@ export class CreateComponent {
         this.selectedBanner = file;
 
         if (this.selectedBanner) {
-          this.createUniversity.get('BannerImage')?.setValue(this.selectedLogo);
+          this.createUniversity
+            .get('BannerImage')
+            ?.setValue(this.selectedBanner);
         }
       }
     }
@@ -106,48 +144,94 @@ export class CreateComponent {
     const paidUntilValue = this.createUniversity.get('PaidUntil')?.value;
     this.loading = true;
     this.getDateToIsoString();
-    const Data = this.createUniversity.value;
-    this.#unversitieService
-      .apiUniversitiesCreateUniversityPost({
-        body: {
-          Address: this.createUniversity.get('Address')?.value,
-          BannerImage: this.createUniversity.get('BannerImage')?.value,
-          Description: this.createUniversity.get('Description')?.value,
-          Email: this.createUniversity.get('Email')?.value,
-          IsPaid: this.createUniversity.get('IsPaid')?.value,
-          LogoImage: this.createUniversity.get('LogoImage')?.value,
-          PaidUntil: paidUntilValue
-            ? `${paidUntilValue.getFullYear()}-${(paidUntilValue.getMonth() + 1)
-                .toString()
-                .padStart(2, '0')}-${paidUntilValue
-                .getDate()
-                .toString()
-                .padStart(2, '0')}`
-            : undefined,
-          PhoneNumber: this.createUniversity.get('PhoneNumber')?.value,
-          UniversityName: this.createUniversity.get('UniversityName')?.value,
-          WebAddress: this.createUniversity.get('WebAddress')?.value,
-        },
-      })
-      .subscribe({
-        next: (res) => {
-          this.loading = false;
-          Swal.fire({
-            title: 'University Created Successfully',
-            icon: 'success',
-          }).then(() => {
-            this.createUniversity.reset();
-            this.selectedLogo = undefined;
-            this.selectedBanner = undefined;
-          });
-        },
-        error: (err) => {
-          this.loading = false;
-          Swal.fire({
-            title: err.error[0]?.message || 'Error creating university',
-            icon: 'error',
-          });
-        },
-      });
+    const Data = this.createUniversity.value;    
+    if (Data.id) {
+      this.#unversitieService
+        .apiUniversitiesUpdateUniversityPut({
+          body: {
+            id: Data.id != null ? Data.id : undefined,
+            address: this.createUniversity.get('Address')?.value,
+            description: this.createUniversity.get('Description')?.value,
+            isPaid: this.createUniversity.get('IsPaid')?.value,
+            paidUntil: paidUntilValue
+              ? `${paidUntilValue.getFullYear()}-${(
+                  paidUntilValue.getMonth() + 1
+                )
+                  .toString()
+                  .padStart(2, '0')}-${paidUntilValue
+                  .getDate()
+                  .toString()
+                  .padStart(2, '0')}`
+              : undefined,
+            phoneNumber: this.createUniversity.get('PhoneNumber')?.value,
+            universityName: this.createUniversity.get('UniversityName')?.value,
+            webAddress: this.createUniversity.get('WebAddress')?.value,
+          },
+        })
+        .subscribe({
+          next: (res) => {
+            this.loading = false;
+            Swal.fire({
+              title: 'University Updated Successfully',
+              icon: 'success',
+            }).then(() => {
+              this.createUniversity.reset();
+              this.#Route.navigate(['/education/viewUnversity'])
+            });
+          },
+          error: err => {
+              this.loading = false;
+            Swal.fire({
+              title: err.error.msg,
+              icon: 'error',
+            })
+          }
+        });
+    } else {
+      this.#unversitieService
+        .apiUniversitiesCreateUniversityPost({
+          body: {
+            Address: this.createUniversity.get('Address')?.value,
+            BannerImage: this.createUniversity.get('BannerImage')?.value,
+            Description: this.createUniversity.get('Description')?.value,
+            Email: this.createUniversity.get('Email')?.value,
+            IsPaid: this.createUniversity.get('IsPaid')?.value,
+            LogoImage: this.createUniversity.get('LogoImage')?.value,
+            PaidUntil: paidUntilValue
+              ? `${paidUntilValue.getFullYear()}-${(
+                  paidUntilValue.getMonth() + 1
+                )
+                  .toString()
+                  .padStart(2, '0')}-${paidUntilValue
+                  .getDate()
+                  .toString()
+                  .padStart(2, '0')}`
+              : undefined,
+            PhoneNumber: this.createUniversity.get('PhoneNumber')?.value,
+            UniversityName: this.createUniversity.get('UniversityName')?.value,
+            WebAddress: this.createUniversity.get('WebAddress')?.value,
+          },
+        })
+        .subscribe({
+          next: (res) => {
+            this.loading = false;
+            Swal.fire({
+              title: 'University Created Successfully',
+              icon: 'success',
+            }).then(() => {
+              this.createUniversity.reset();
+              this.selectedLogo = undefined;
+              this.selectedBanner = undefined;
+            });
+          },
+          error: (err) => {
+            this.loading = false;
+            Swal.fire({
+              title: err.error[0]?.message || 'Error creating university',
+              icon: 'error',
+            });
+          },
+        });
+    }
   }
 }

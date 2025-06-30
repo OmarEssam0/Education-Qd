@@ -1,8 +1,47 @@
-<div class="create-toolbar p-3 bg-white mb-3 d-flex justify-content-between align-items-center">
+@if(SpecProfessorCourse){
+<div
+  class="create-toolbar p-3 bg-white mb-3 d-flex justify-content-between align-items-center"
+>
   <div class="create-title fs-3 d-flex align-items-center">
-    <div class="back d-flex justify-content-center align-items-center cursor-pointer" [routerLink]="['/education/course-To-Professor']">
-        <i class="fa-solid fa-chevron-left fs-5 "></i>
+    <div
+      class="back d-flex justify-content-center align-items-center cursor-pointer"
+      [routerLink]="['/education/course-To-Professor']"
+    >
+      <i class="fa-solid fa-chevron-left fs-5"></i>
     </div>
-    <span class="fw-bold ms-2">{{SpecProfessorCourse.course}}</span>
+    <span class="fw-bold ms-2">{{
+      this.SpecProfessorCourse.course?.title
+    }}</span>
   </div>
 </div>
+<div class="create-form bg-white p-4">
+  <form>
+    <div class="row g-3 align-items-center">
+      <div class="col-md-4">
+        <div>
+          <label for="UploadContent" class="ms-1 d-block">Upload content</label>
+          <input
+            id="UploadContent"
+            type="file"
+            class="form-control mt-2 h-40px"
+            placeholder="Upload content"
+            accept="application/pdf"
+            multiple
+            (change)="onFilesSelected($event)"
+          />
+        </div>
+      </div>
+      <div class="col-md-8"></div>
+      <div class="col-md-4">
+        <p-button
+          [label]="'Upload content'"
+          styleClass="w-100"
+          icon="fa-solid fa-check"
+          [loading]="loading"
+          (click)="UploadContent()"
+        />
+      </div>
+    </div>
+  </form>
+</div>
+}

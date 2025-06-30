@@ -3,25 +3,25 @@
 >
   <div class="create-title d-flex align-items-center gap-2 fs-3">
     <i class="fa-solid fa-square-plus main-color"></i>
-    <span class="fw-bold">Create Professor</span>
+    <span class="fw-bold">{{id ? 'Update Professor' : 'Create Professor'}}</span>
   </div>
-  <div class="exacl-btn">
-    <p-button
-      label="Upload excel file"
-      styleClass="main-bg"
-      icon="fa-solid fa-upload"
-      [loading]="loading"
-    />
-  </div>
+  @if(!id){
+    <div class="exacl-btn">
+      <p-button
+        label="Upload excel file"
+        styleClass="main-bg"
+        icon="fa-solid fa-upload"
+        [loading]="loading"
+      />
+    </div>
+  }
 </div>
 <div class="create-form bg-white p-4">
   <form [formGroup]="createProfessor" (submit)="create()">
     <div class="row g-3 align-items-center">
       <div class="col-md-4">
         <div>
-          <label for="CollegeName" class="ms-1 d-block"
-            >Name</label
-          >
+          <label for="CollegeName" class="ms-1 d-block">Name</label>
           <input
             id="CollegeName"
             formControlName="Name"
@@ -31,6 +31,7 @@
           />
         </div>
       </div>
+      @if(!id){
       <div class="col-md-4">
         <div>
           <label for="Email" class="ms-1 d-block">Email</label>
@@ -43,6 +44,9 @@
           />
         </div>
       </div>
+      }@else {
+        <div class="col-md-4"></div>
+      }
       <div class="col-md-4"></div>
       <div class="col-md-4">
         <p-button
@@ -56,4 +60,3 @@
     </div>
   </form>
 </div>
-

@@ -3,8 +3,11 @@
 >
   <div class="create-title d-flex align-items-center gap-2 fs-3">
     <i class="fa-solid fa-square-plus main-color"></i>
-    <span class="fw-bold">Create university</span>
+    <span class="fw-bold">{{
+      id ? "Update university" : "Create university"
+    }}</span>
   </div>
+  @if(!id){
   <div class="exacl-btn">
     <p-button
       label="Upload excel file"
@@ -13,10 +16,12 @@
       [loading]="loading"
     />
   </div>
+  }
 </div>
 <div class="create-form bg-white p-4">
   <form [formGroup]="createUniversity" (submit)="create()">
     <div class="row g-3 align-items-center">
+      @if(!id){
       <div
         class="col-12 d-flex w-100 align-items-center justify-content-center"
       >
@@ -36,6 +41,7 @@
           </div>
         </div>
       </div>
+      }
       <div class="col-md-4">
         <div>
           <label for="UniversityName" class="ms-1 d-block"
@@ -50,6 +56,7 @@
           />
         </div>
       </div>
+      @if(!id){
       <div class="col-md-4">
         <div>
           <label for="Email" class="ms-1 d-block">Email</label>
@@ -62,6 +69,7 @@
           />
         </div>
       </div>
+      }
       <div class="col-md-4">
         <div>
           <label for="PhoneNumber" class="ms-1 d-block">PhoneNumber</label>
@@ -120,6 +128,7 @@
           />
         </div>
       </div>
+      @if(!id){
       <div class="col-md-4">
         <div>
           <label for="BannerImage" class="ms-1 d-block">Banner image</label>
@@ -132,6 +141,7 @@
           />
         </div>
       </div>
+      }
       <div class="col-md-4">
         <div>
           <label for="IsPaid" class="ms-1 d-block">Is paid</label>
@@ -160,7 +170,7 @@
       <div class="col-md-4">
         <p-button
           type="submit"
-          label="Create"
+          [label]="id ? 'update' : 'Create'"
           styleClass="w-100"
           icon="fa-solid fa-check"
           [loading]="loading"
