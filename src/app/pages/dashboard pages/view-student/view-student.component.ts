@@ -9,10 +9,11 @@ import { StudentsService } from '../../../core/backend/dashboard/services';
 import { AllStudentDto } from '../../../core/backend/dashboard/models/Education/Application/Dtos/all-student-dto';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-view-student',
-  imports: [MainToolbarComponent,TableModule,IconFieldModule ,InputIconModule,FormsModule,RouterLink],
+  imports: [MainToolbarComponent,TableModule,IconFieldModule ,InputIconModule,FormsModule,RouterLink,DialogModule],
   templateUrl: './view-student.component.html',
   styleUrl: './view-student.component.scss'
 })

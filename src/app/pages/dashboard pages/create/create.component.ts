@@ -8,10 +8,15 @@ import {
 } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ButtonModule } from 'primeng/button';
-import { UniversitiesService } from '../../../core/backend/dashboard/services';
+import {
+  TemplateService,
+  UniversitiesService,
+} from '../../../core/backend/dashboard/services';
 import Swal from 'sweetalert2';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FileUploadModule } from 'primeng/fileupload';
+import { DialogModule } from 'primeng/dialog';
 @Component({
   selector: 'app-create',
   imports: [
@@ -20,6 +25,8 @@ import { ActivatedRoute, Router } from '@angular/router';
     ReactiveFormsModule,
     DatePickerModule,
     ToggleSwitchModule,
+    FileUploadModule,
+    DialogModule,
   ],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss',
@@ -37,6 +44,7 @@ export class CreateComponent {
 
   readonly #unversitieService = inject(UniversitiesService);
   readonly #Route = inject(Router);
+  readonly #TemplateService = inject(TemplateService);
   constructor(private Route: ActivatedRoute) {
     Route.queryParamMap.subscribe({
       next: (data) => {
@@ -144,7 +152,7 @@ export class CreateComponent {
     const paidUntilValue = this.createUniversity.get('PaidUntil')?.value;
     this.loading = true;
     this.getDateToIsoString();
-    const Data = this.createUniversity.value;    
+    const Data = this.createUniversity.value;
     if (Data.id) {
       this.#unversitieService
         .apiUniversitiesUpdateUniversityPut({
@@ -176,16 +184,16 @@ export class CreateComponent {
               icon: 'success',
             }).then(() => {
               this.createUniversity.reset();
-              this.#Route.navigate(['/education/viewUnversity'])
+              this.#Route.navigate(['/education/viewUnversity']);
             });
           },
-          error: err => {
-              this.loading = false;
+          error: (err) => {
+            this.loading = false;
             Swal.fire({
               title: err.error.msg,
               icon: 'error',
-            })
-          }
+            });
+          },
         });
     } else {
       this.#unversitieService
@@ -233,5 +241,61 @@ export class CreateComponent {
           },
         });
     }
+  }
+  onExcelUpload(event: any) {
+    const file = event.files[0];
+    this.importUniversities(file);
+  }
+  visible: boolean = false;
+  errorContent: any[] = [];
+  importUniversities(file: Blob) {
+    this.#unversitieService
+      .apiUniversitiesImportUniversitiesPost({
+        body: {
+          UniversitiesExcel: file,
+        },
+      })
+      .subscribe({
+        next: (res) => {
+          Swal.fire({
+            title: 'File Uploaded Successfully',
+            icon: 'success',
+          }).then((e) => {
+            this.#Route.navigate(['/education/viewUnversity']);
+          });
+        },
+        error: (err) => {
+          this.errorContent = err.error.errors.failedRecordsDetails!;
+          this.visible = true;
+        },
+      });
+  }
+
+  file: any;
+  downloadExeclTemplate() {
+    this.#TemplateService
+      .apiTemplateGetImportTemplateGet({
+        Type: 'University',
+      })
+      .subscribe({
+        next: (res) => {
+          this.file = res;
+          if (res !== undefined && res !== null) {
+            // const blob = new Blob([res], {
+            //   type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            // });
+            const url = window.URL.createObjectURL(this.file);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'University Template.xlsx';
+            a.click();
+            window.URL.revokeObjectURL(url);
+          } else {
+          }
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 }

@@ -15,12 +15,16 @@ import {
   CoursesService,
   ProfessorsService,
   StudentsService,
+  TemplateService,
 } from '../../../core/backend/dashboard/services';
 import { CourseByCollegeIdResponseDto } from '../../../core/backend/dashboard/models/Education/Application/UseCases/Courses/GetAllCoursesQuery/course-by-college-id-response-dto';
 import Swal from 'sweetalert2';
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { FileUploadModule, UploadEvent } from 'primeng/fileupload';
+import { MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
 import { ProfessorByCourseResponseDto } from '../../../core/backend/dashboard/models/Education/Application/UseCases/Professors/GetAllProfessorsByCourseQuery/professor-by-course-response-dto';
 @Component({
   selector: 'app-create-student',
@@ -31,6 +35,8 @@ import { ProfessorByCourseResponseDto } from '../../../core/backend/dashboard/mo
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
+    FileUploadModule,
+    DialogModule,
   ],
   templateUrl: './create-student.component.html',
   styleUrl: './create-student.component.scss',
@@ -55,6 +61,7 @@ export class CreateStudentComponent {
   readonly #studentService = inject(StudentsService);
   readonly #professorService = inject(ProfessorsService);
   readonly #coursesService = inject(CoursesService);
+  readonly #TemplateService = inject(TemplateService);
   readonly #Route = inject(Router);
   constructor(
     private Route: ActivatedRoute,
@@ -89,7 +96,7 @@ export class CreateStudentComponent {
   //         res.levels?.forEach((res) => {
   //           res.semesters?.forEach((x) => {
   //             x.courses?.forEach((c) => {
-  //               if (c.professorCourse?.course?.id) {                  
+  //               if (c.professorCourse?.course?.id) {
   //                 this.getProfessorFromCourse(c.professorCourse?.course?.id);
   //               }
   //             });
@@ -199,7 +206,7 @@ export class CreateStudentComponent {
             icon: 'success',
           }).then((res) => {
             this.createStudent.reset();
-            // this.#Route.navigate(['/education/view-student']);
+            this.#Route.navigate(['/education/view-student']);
           });
         },
         error: (err) => {
@@ -219,6 +226,61 @@ export class CreateStudentComponent {
       .subscribe({
         next: (res) => {
           this.getAllProfessorCourse = res.professors!;
+        },
+      });
+  }
+  onExcelUpload(event: any) {
+    const file = event.files[0];
+    this.importStudent(file);
+  }
+  visible: boolean = false;
+  errorContent: any[] = [];
+  importStudent(file: Blob) {
+    this.#studentService
+      .apiStudentsImportStudentsPost({
+        body: {
+          StudentsExcel: file,
+        },
+      })
+      .subscribe({
+        next: (res) => {
+          Swal.fire({
+            title: 'File Uploaded Successfully',
+            icon: 'success',
+          }).then((e) => {
+            this.#Route.navigate(['/education/view-student']);
+          });
+        },
+        error: (err) => {
+          this.errorContent = err.error.errors.failedRecordsDetails!;
+          this.visible = true;
+        },
+      });
+  }
+  file: any;
+  downloadExeclTemplate() {
+    this.#TemplateService
+      .apiTemplateGetImportTemplateGet({
+        Type: 'Student',
+      })
+      .subscribe({
+        next: (res) => {
+          this.file = res;
+          if (res !== undefined && res !== null) {
+            // const blob = new Blob([res], {
+            //   type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            // });
+            const url = window.URL.createObjectURL(this.file);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Student Template.xlsx';
+            a.click();
+            window.URL.revokeObjectURL(url);
+          } else {
+          }
+        },
+        error: (err) => {
+          console.log(err);
         },
       });
   }

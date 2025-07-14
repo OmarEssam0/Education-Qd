@@ -21,7 +21,7 @@ export function apiTemplateGetImportTemplateGet(http: HttpClient, rootUrl: strin
   }
 
   return http.request(
-    rb.build({ responseType: 'json', accept: 'text/json', context })
+    rb.build({ responseType: 'blob', accept: 'application/octet-stream', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {

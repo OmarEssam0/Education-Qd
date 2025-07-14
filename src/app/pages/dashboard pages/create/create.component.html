@@ -8,12 +8,22 @@
     }}</span>
   </div>
   @if(!id){
-  <div class="exacl-btn">
+  <div class="exacl-btn d-flex align-items-center gap-2">
     <p-button
-      label="Upload excel file"
-      styleClass="main-bg"
-      icon="fa-solid fa-upload"
-      [loading]="loading"
+      label="Download template"
+      icon="fa-solid fa-download"
+      (click)="downloadExeclTemplate()"
+    />
+    <p-fileUpload
+      mode="basic"
+      name="excelFile[]"
+      chooseStyleClass="main-bg"
+      chooseIcon="fa-solid fa-upload"
+      accept=".xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      maxFileSize="1000000"
+      (onSelect)="onExcelUpload($event)"
+      [auto]="true"
+      chooseLabel="Upload Excel file"
     />
   </div>
   }

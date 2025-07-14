@@ -9,6 +9,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { isPlatformBrowser } from '@angular/common';
 import { UniveristyPublicDto } from '../../core/backend/dashboard/models/Education/Application/UseCases/Universities/GetUniversitiesQuery/univeristy-public-dto';
 import { RouterLink } from '@angular/router';
+import { SkeletonModule } from 'primeng/skeleton';
 export interface HeaderTableData {
   headerName: string;
   sorted: boolean;
@@ -24,12 +25,14 @@ export interface HeaderTableData {
     IconFieldModule,
     RouterLink,
     InputIconModule,
+    SkeletonModule
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
 export class TableComponent {
   isBrowser: boolean;
+  isLoading = true;
   @Input() headerTableData!: HeaderTableData[];
   @Input() allUniversities!: UniveristyPublicDto[];
   // @Output() searchInput

@@ -13,8 +13,6 @@ import { StrictHttpResponse } from '../strict-http-response';
 
 import { apiTemplateGetImportTemplateGet } from '../fn/template/api-template-get-import-template-get';
 import { ApiTemplateGetImportTemplateGet$Params } from '../fn/template/api-template-get-import-template-get';
-import { apiTemplateGetImportTemplateGet$Plain } from '../fn/template/api-template-get-import-template-get-plain';
-import { ApiTemplateGetImportTemplateGet$Plain$Params } from '../fn/template/api-template-get-import-template-get-plain';
 import { GetTemplateResponse as EducationApplicationUseCasesTemplateGetTemplateResponse } from '../models/Education/Application/UseCases/Template/get-template-response';
 
 @Injectable({ providedIn: 'root' })
@@ -25,28 +23,6 @@ export class TemplateService extends BaseService {
 
   /** Path part for operation `apiTemplateGetImportTemplateGet()` */
   static readonly ApiTemplateGetImportTemplateGetPath = '/api/Template/GetImportTemplate';
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiTemplateGetImportTemplateGet$Plain()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiTemplateGetImportTemplateGet$Plain$Response(params?: ApiTemplateGetImportTemplateGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<EducationApplicationUseCasesTemplateGetTemplateResponse>> {
-    return apiTemplateGetImportTemplateGet$Plain(this.http, this.rootUrl, params, context);
-  }
-
-  /**
-   * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiTemplateGetImportTemplateGet$Plain$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiTemplateGetImportTemplateGet$Plain(params?: ApiTemplateGetImportTemplateGet$Plain$Params, context?: HttpContext): Observable<EducationApplicationUseCasesTemplateGetTemplateResponse> {
-    return this.apiTemplateGetImportTemplateGet$Plain$Response(params, context).pipe(
-      map((r: StrictHttpResponse<EducationApplicationUseCasesTemplateGetTemplateResponse>): EducationApplicationUseCasesTemplateGetTemplateResponse => r.body)
-    );
-  }
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.

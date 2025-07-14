@@ -9,10 +9,14 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { ProfessorsService } from '../../../../core/backend/dashboard/services';
+import {
+  ProfessorsService,
+  TemplateService,
+} from '../../../../core/backend/dashboard/services';
 import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { FileUploadModule } from 'primeng/fileupload';
+import { DialogModule } from 'primeng/dialog';
 @Component({
   selector: 'app-create-professor',
   imports: [
@@ -20,7 +24,9 @@ import { ActivatedRoute, Router } from '@angular/router';
     DatePickerModule,
     ToggleSwitchModule,
     FormsModule,
+    FileUploadModule,
     ReactiveFormsModule,
+    DialogModule,
   ],
   templateUrl: './create-professor.component.html',
   styleUrl: './create-professor.component.scss',
@@ -29,6 +35,7 @@ export class CreateProfessorComponent {
   loading: boolean = false;
   id!: string;
   readonly #professorService = inject(ProfessorsService);
+  readonly #TemplateService = inject(TemplateService);
   readonly #Route = inject(Router);
   constructor(private Route: ActivatedRoute) {
     Route.queryParamMap.subscribe({
@@ -36,7 +43,9 @@ export class CreateProfessorComponent {
         this.id = data.get('id') ?? '';
       },
     });
-    this.setValue();
+    if (this.id) {
+      this.setValue();
+    }
   }
 
   setValue() {
@@ -123,5 +132,73 @@ export class CreateProfessorComponent {
           },
         });
     }
+  }
+
+  onExcelUpload(event: any) {
+    const file = event.files[0];
+    console.log('Selected file:', file);
+    this.importProfessor(file);
+
+    // // لو عاوز تقرأ محتوى ملف Excel
+    // const reader = new FileReader();
+    // reader.onload = (e: any) => {
+    //   const data = new Uint8Array(e.target.result);
+    //   // تقدر تستخدم مكتبة xlsx لقراءة البيانات هنا
+    //   console.log('Excel file loaded!');
+    // };
+    // reader.readAsArrayBuffer(file);
+  }
+  visible: boolean = false;
+  errorContent: any[] = [];
+  importProfessor(file: Blob) {
+    this.#professorService
+      .apiProfessorsImportProfessorsPost({
+        body: {
+          ProfessorsExcel: file,
+        },
+      })
+      .subscribe({
+        next: (res) => {
+          Swal.fire({
+            title: 'File Uploaded Successfully',
+            icon: 'success',
+          }).then((e) => {
+            this.#Route.navigate(['/education/view-professor']);
+          });
+        },
+        error: (err) => {
+          console.log(err);
+          
+          this.errorContent = err.error.errors.failedRecordsDetails!;
+          this.visible = true;
+        },
+      });
+  }
+  file: any;
+  downloadExeclTemplate() {
+    this.#TemplateService
+      .apiTemplateGetImportTemplateGet({
+        Type: 'Professor',
+      })
+      .subscribe({
+        next: (res) => {
+          this.file = res;
+          if (res !== undefined && res !== null) {
+            // const blob = new Blob([res], {
+            //   type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            // });
+            const url = window.URL.createObjectURL(this.file);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Profosser Template.xlsx';
+            a.click();
+            window.URL.revokeObjectURL(url);
+          } else {
+          }
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 }

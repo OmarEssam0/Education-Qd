@@ -6,12 +6,23 @@
     <span class="fw-bold">{{id ? 'Update course' :'Create course'}}</span>
   </div>
   @if(!id){
-    <div class="exacl-btn">
-      <p-button
-        label="Upload excel file"
-        styleClass="main-bg"
-        icon="fa-solid fa-upload"
+    <div class="exacl-btn d-flex align-items-center gap-2">
+        <p-button
+        label="Download template"
+        icon="fa-solid fa-download"
         [loading]="loading"
+        (click)="downloadExeclTemplate()"
+      />
+        <p-fileUpload
+        mode="basic"
+        name="excelFile[]"
+        chooseStyleClass="main-bg"
+        chooseIcon="fa-solid fa-upload"
+        accept=".xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        maxFileSize="1000000"
+        (onSelect)="onExcelUpload($event)"
+        [auto]="true"
+        chooseLabel="Upload Excel file"
       />
     </div>
   }
@@ -73,3 +84,19 @@
     </div>
   </form>
 </div>
+
+<p-dialog
+  header="Excel error"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '50rem' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+>
+  @for (item of errorContent; track $index) { @for(err of item.errors; track
+  $index){
+  <p class="mb-8">{{ item.name }}</p>
+  <p class="mb-8">{{ err }}</p>
+  }
+  <hr />
+  }
+</p-dialog>

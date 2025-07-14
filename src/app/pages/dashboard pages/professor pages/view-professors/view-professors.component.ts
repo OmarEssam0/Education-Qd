@@ -50,8 +50,8 @@ export class ViewProfessorsComponent {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
   headerTableData: HeaderTableData[] = [
-    { headerName: 'Name', sorted: true },
-    { headerName: 'Email', sorted: true },
+    { headerName: 'Name', sorted: false },
+    { headerName: 'Email', sorted: false },
     { headerName: 'Assign to course', sorted: false },
   ];
   ngOnInit(): void {
@@ -92,6 +92,7 @@ export class ViewProfessorsComponent {
           }).then((res) => {
             this.ngOnInit();
             this.visible =false
+            this.AssignCourse.reset()
           });
         },
         error: (err) => {
